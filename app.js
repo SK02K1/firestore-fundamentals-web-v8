@@ -1,7 +1,11 @@
 const recipeList = document.querySelector("#recipe-list");
 const form = document.querySelector("#recipe-form");
 
-const showRecipeList = ({title, author, createdAt}) => {
+const showRecipeList = ({
+    title,
+    author,
+    createdAt
+}) => {
     recipeList.innerHTML += `
     <li>
         <div>Recipe title: ${title}</div>
@@ -26,11 +30,22 @@ form.addEventListener("submit", (e) => {
         author: form.author.value,
         createdAt: firebase.firestore.Timestamp.fromDate(now)
     };
-    
+
     db.collection("recipes").add(newRecipeData)
-    .then(() =>  {
-        form.reset();
-        console.log("new recipe added")
-    })
-    .catch((err) => console.log(err));
+        .then(() => {
+            form.reset();
+            Toastify({
+                text: "new recipe added",
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                },
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "right",
+                stopOnFocus: true
+            }).showToast();
+            console.log("new recipe added")
+        })
+        .catch((err) => console.log(err));
 });

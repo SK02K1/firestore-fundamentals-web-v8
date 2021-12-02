@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>Recipe app</title>
 </head>
 
@@ -21,7 +22,6 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script>
     const firebaseConfig = {
-        apiKey: "AIzaSyCAr1hoFB3NaErGFKf8XPp1ipGNm5_em3A",
         authDomain: "recipes-app-cf8c4.firebaseapp.com",
         projectId: "recipes-app-cf8c4",
         storageBucket: "recipes-app-cf8c4.appspot.com",
@@ -32,6 +32,7 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 </script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="./app.js"></script>
 
 </html>
