@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe app</title>
+</head>
+
+<body>
+    <h1>Recipe app</h1>
+</body>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCAr1hoFB3NaErGFKf8XPp1ipGNm5_em3A",
+        authDomain: "recipes-app-cf8c4.firebaseapp.com",
+        projectId: "recipes-app-cf8c4",
+        storageBucket: "recipes-app-cf8c4.appspot.com",
+        messagingSenderId: "356113400828",
+        appId: "1:356113400828:web:741861c6a3689983e4e879",
+        measurementId: "G-4910YG5Y6C"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+</script>
+<script src="./app.js"></script>
+
+</html>
