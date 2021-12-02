@@ -1,5 +1,6 @@
 const recipeList = document.querySelector("#recipe-list");
 const form = document.querySelector("#recipe-form");
+const btnUnsubscribe = document.querySelector("#btn-unsubscribe");
 
 const addToList = ({
     title,
@@ -26,7 +27,7 @@ const removeFromList = (removedRecipeID) => {
 };
 
 
-db.collection("recipes").onSnapshot((snapshot) => {
+const unsubListner = db.collection("recipes").onSnapshot((snapshot) => {
     snapshot.docChanges().forEach(changedDocInfo => {
 
         const changeType = changedDocInfo.type;
@@ -37,7 +38,12 @@ db.collection("recipes").onSnapshot((snapshot) => {
             removeFromList(changedDocInfo.doc.id);
         }      
     });;
-})
+});
+
+btnUnsubscribe.addEventListener("click", () => {
+    unsubListner();
+    console.log("unsubscribed from real-time listener");
+});
 
 
 form.addEventListener("submit", (e) => {
