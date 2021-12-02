@@ -1,7 +1,7 @@
 const recipeList = document.querySelector("#recipe-list");
 const form = document.querySelector("#recipe-form");
 
-const showRecipeList = ({
+const addToList = ({
     title,
     author,
     createdAt
@@ -16,11 +16,28 @@ const showRecipeList = ({
     `;
 };
 
-db.collection("recipes").get().then((snapshot) => {
-    snapshot.docs.forEach((recipeDoc) => {
-        showRecipeList(recipeDoc.data(), recipeDoc.id)
+const removeFromList = (removedRecipeID) => {
+    Array.from(recipeList.children).forEach((recipe) => {
+        const recipeID = recipe.getAttribute("data-id");
+        if(recipeID === removedRecipeID){
+            recipe.remove();
+        }
     });
-}).catch((err) => console.log(err));
+};
+
+
+db.collection("recipes").onSnapshot((snapshot) => {
+    snapshot.docChanges().forEach(changedDocInfo => {
+
+        const changeType = changedDocInfo.type;
+        console.log(changeType);
+        if(changeType === "added"){
+            addToList(changedDocInfo.doc.data(), changedDocInfo.doc.id);
+        }else if(changeType === "removed"){
+            removeFromList(changedDocInfo.doc.id);
+        }      
+    });;
+})
 
 
 form.addEventListener("submit", (e) => {
