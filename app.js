@@ -1,5 +1,6 @@
 const recipeList = document.querySelector("#recipe-list");
 const form = document.querySelector("#recipe-form");
+const btnUnsubscribe = document.querySelector("#btn-unsubscribe");
 
 const addToList = ({
     title,
@@ -19,25 +20,30 @@ const addToList = ({
 const removeFromList = (removedRecipeID) => {
     Array.from(recipeList.children).forEach((recipe) => {
         const recipeID = recipe.getAttribute("data-id");
-        if(recipeID === removedRecipeID){
+        if (recipeID === removedRecipeID) {
             recipe.remove();
         }
     });
 };
 
 
-db.collection("recipes").onSnapshot((snapshot) => {
+const unsubListner = db.collection("recipes").onSnapshot((snapshot) => {
     snapshot.docChanges().forEach(changedDocInfo => {
 
         const changeType = changedDocInfo.type;
-        console.log(changeType);
-        if(changeType === "added"){
+
+        if (changeType === "added") {
             addToList(changedDocInfo.doc.data(), changedDocInfo.doc.id);
-        }else if(changeType === "removed"){
+        } else if (changeType === "removed") {
             removeFromList(changedDocInfo.doc.id);
-        }      
+        }
     });;
-})
+});
+
+btnUnsubscribe.addEventListener("click", () => {
+    unsubListner();
+
+});
 
 
 form.addEventListener("submit", (e) => {
@@ -63,7 +69,7 @@ form.addEventListener("submit", (e) => {
                 position: "right",
                 stopOnFocus: true
             }).showToast();
-            console.log("new recipe added")
+
         })
         .catch((err) => console.log(err));
 });
@@ -84,7 +90,7 @@ recipeList.addEventListener("click", (e) => {
             if (result.isConfirmed) {
                 const recipeID = target.parentElement.getAttribute("data-id");
                 db.collection("recipes").doc(recipeID).delete().then(() => {
-                    console.log("recipe deleted");
+
                 }).catch((err) => console.log(err));
                 Swal.fire(
                     'Deleted!',
